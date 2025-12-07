@@ -1,0 +1,10 @@
+{
+    "WhatIf": true,
+    "Groups": [
+            { "SID": "objectSID of Group Example 1",
+              "Name": "Example 1"},
+            { "SID": "objectSID of Group Example 2",
+              "Name": "Example 2" }           
+              ],
+    "LogPath": "C:\\Path\\To\\Logfiles"
+}
