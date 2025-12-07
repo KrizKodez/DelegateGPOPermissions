@@ -1,13 +1,40 @@
 ![PowerShell](https://img.shields.io/badge/powershell-5391FE?style=flat&logo=powershell&logoColor=white)&nbsp;&nbsp;&nbsp;[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green)](https://www.gnu.org/licenses/gpl-3.0)
 
 # Delegate GPO Permissions
-A declarative way to implement dynamic groups in Active Directory.
+The most simple way to allow other groups the creation and managing of their own Active Directory GPOs.
 
 ## Installation
 The installation only consists of copying the script files into a desired folder, configure the enclosed Config.json file and possibly creating a Windows Scheduled Tasks. 
 
 ## Description
 This repository contains a simple solution to delegate the permissions to create and manage Active Directory GPOs and WMI-Filters to other groups. The solution utilizes the Creator/Owner right, which is applied to every GPO-Container and the associated default AD group "Group Policy Creator Owners". Every member of this group can create GPOs and automatically becomes the owner of those GPOs. The problem is that other group members cannot access these GPOs. This is where the script comes in. It scans the GPO objects container at regular intervals, identifies the GPOs where a group member is the owner and replaces this trustee with the group to which the user belongs. The procedure is identical for WMI filters.
+
+The following picturer show an example configuration of the script and what the script is doing:
+
+Configuration.png
+
+In the 'Groups' array we have for each group a hashtable consisting of the objectSID and the name of the group. We are using the SID to avoid problems in the case of a group renaming. The name property is only for the administrator to know which group the SID identifies. With the 'WhatIf' parameter set to TRUE you could perform a test run.
+
+The test scenario uses two groups (ClientAdmisn and ServerAdmins) which should be allowed to create and manage their own GPOs. Both groups are members of the AD default group "Group Policy Creator Owners". This membership allows the members to create new GPOs in the GPO Objects-Container.
+
+Group Policy Creator Ownere-Group.png
+
+The next picture shows the result if user ClientAdminA which is a member of the group ClientAdmins has been created the new GPO "Test by ClientAdminA":
+
+Delegation settings new GPO by ClientAdminA.png
+
+After the script has be run it show the following output in the log:
+
+script log output.png
+
+It informs about what GPO has been manipulated and which trustee has been replaced with the corresponding group. The result is then that the group of the ClientAdminA has been placed in the ACL of the GPO:
+
+Delegation settings after the script.png
+
+Only creating GPOs is not enough so we must also give the group the needed 'Link GPOs' permission on all OU which should be managed by this group:
+
+Delegation settings to allow GPO linking.png
+
 
 
 
