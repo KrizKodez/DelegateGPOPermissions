@@ -23,7 +23,7 @@ The next picture shows the result if user ClientAdminA which is a member of the 
 
 <img width="640" height="260" alt="Delegation settings new GPO by ClientAdminA" src="https://github.com/user-attachments/assets/58014ea9-27ef-4c15-b6af-5caf6d83a677" />
 
-After the script has be run it show the following output in the log:
+After the script has run it show the following output in the log:
 
 <img width="697" height="261" alt="Script Log Output" src="https://github.com/user-attachments/assets/e93eef8f-2f93-4351-a53b-ca9cb0d5ad80" />
 
@@ -31,9 +31,12 @@ It informs about what GPO has been manipulated and which trustee has been replac
 
 <img width="638" height="244" alt="Delegation settings after the script" src="https://github.com/user-attachments/assets/cd6c7f7c-4c83-453f-941d-8e72f7e22f35" />
 
-Only creating GPOs is not enough so we must also give the group the needed 'Link GPOs' permission on all OU which should be managed by this group:
+Only creating GPOs is not enough so we must also give the group the needed 'Link GPOs' permission on all OUs which should be managed by this group:
 
 <img width="941" height="602" alt="Delegation settings to allow GPO Linking" src="https://github.com/user-attachments/assets/5b5ba39a-f2ff-44ee-8a1f-19d53ff12ceb" />
+
+
+You could use as much groups as you want but each member of each group may only be a member of exactly one group otherwise the script reports an error because it does not know which group it must use to replace the user trustee.
 
 ## Contributing
 All PowerShell developers or Active Directory experts are very welcome to help and make the code better, more readable or contribute new ideas. 
